@@ -1,0 +1,453 @@
+/* CSS styles for the video background landing page.
+  Save this as 'styles.css' (or 'LandingPage.css', etc.)
+  and import it into your LandingPage.jsx file.
+*/
+
+/* Main landing page container 
+  - Sets up a flex column to arrange children vertically.
+  - 'justify-content: space-between' pushes the first child (title) to the top
+    and the last child (button) to the bottom.
+*/
+.landing-page {
+  box-sizing: border-box; /* Ensures padding is included in height */
+  min-height: 100vh; /* Full viewport height */
+  position: relative; /* Positioning context for the video */
+  overflow: hidden; /* Prevents video overflow */
+  background-color: #3b3b3b;
+  /* Flexbox setup for vertical layout */
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center horizontally */
+  justify-content: space-between; /* Pushes content to top and bottom */
+  
+  /* Padding for the top/bottom and sides */
+  padding: 4rem 2rem; 
+  
+  /* Default text color for contrast against a dark video */
+  color: #ffffff;
+  text-align: center;
+}
+
+/* Background video 
+  - Sits absolutely positioned behind all content.
+*/
+.login-bg-video {
+  position: absolute;
+  /* Sits behind content */
+  z-index: -1; 
+  
+  /* Darken the video slightly to help text stand out */
+  filter: brightness(0.7); 
+}
+
+/* Hero Title (H1)
+  - Sits at the top (as the first flex item).
+*/
+.hero-title {
+  font-size: 3.0rem;
+  font-weight: 700;
+  color: #ffffff;
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+  margin-right: -53vw;
+  margin-top: -5vh;
+  z-index: 1; /* Ensures it's above the video */
+}
+
+/* Image Placeholder
+  - 'flex-grow: 1' makes this div expand to fill all 
+    available vertical space in the middle.
+*/
+.image-placeholder {
+  flex-grow: 1; 
+  
+  /* Just for visualization and centering your future content */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  min-height: 200px; /* Ensures it has some space */
+  z-index: 1;
+  /* border: 10px solid black; */
+}
+
+/* Keyframes for the drop-in animation */
+@keyframes dropIn {
+  from {
+    transform: translateY(-150px);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Class for each animated character */
+.hero-title-char {
+  display: inline-block; /* Required for transforms */
+  font-size: 5rem;
+  opacity: 0;
+  position: relative;
+  margin-right: -10px;
+  animation: dropIn 0.8s ease-out forwards; /* Apply the animation */
+}
+/* Optional: Styling for the placeholder text */
+
+.image-placeholder {
+  flex-grow: 1; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 300px;
+  z-index: 1;
+
+  /* This is new: it's the "viewport" for the animation */
+  position: relative;
+  overflow: hidden; /* Hides images as they fly off-screen */
+}
+/* Call-to-Action Button
+  - Sits at the bottom (as the last flex item).
+*/
+.cta-button {
+  background-color: transparent;
+  color: #ffffff;
+  transform: translate(50%,-40%);
+  border: none;
+  border-radius: 80px;
+  text-align: left;
+  font-size: 6.1rem;
+  padding: 10vh 10vh;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+ border: 2px solid white;
+  z-index: 1;
+}
+
+.cta-button:hover {
+  background-color: #afafaf;
+}
+/* --- ADD ALL OF THIS --- */
+
+/* Animation Stage */
+
+/* --- ADD ALL OF THIS NEW CSS --- */
+
+.animation-stage {
+  position: relative;
+  width: 600px; /* Width of the animation "world" */
+  height: 300px;
+  /* Optional: add a border to see the stage */
+  /* border: 1px dashed rgba(255, 255, 255, 0.3); */
+}
+
+/* Base class for all images in the animation */
+.anim-image {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 8px;
+}
+.inpout{
+  width: 600px;
+  position: absolute;
+  left: 10%;
+}
+.ans{
+  position: absolute;
+  width: 500px;
+  bottom: -1%;
+  right: 5%;
+
+}
+/* The central "Evosolve" box */
+.processor-image {
+  z-index: 10; /* Stays on top of inputs */
+  /* Optional: add a pulse */
+  animation: processor-pulse 2s infinite ease-in-out 3s;
+}
+
+/* The input images that fly in */
+.input-image {
+  z-index: 5; /* Fly *behind* the processor */
+  opacity: 0; /* Start hidden */
+
+  /* Apply the 8-second looping animation */
+  animation: flyInAndHide 8s ease-in-out infinite;
+}
+.how{
+width: 80vw;
+color: #222;
+text-align: right;
+font-size: 6rem;
+}
+/* The output image that flies out */
+.output-image {
+  z-index: 15; /* Flies *in front of* the processor */
+  opacity: 0; /* Start hidden */
+
+  /* Apply the 8-second looping animation */
+  animation: fadeInAndFlyOut 8s ease-in-out infinite;
+}
+
+/* --- KEYFRAME ANIMATIONS --- */
+
+/* Animation for all INPUT images */
+@keyframes flyInAndHide {
+  0% {
+    left: -50%; /* Start off-screen left */
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.8);
+  }
+  15% {
+    opacity: 1;
+  }
+  30% {
+    left: 50%; /* Arrive at center */
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  40% {
+    left: 50%;
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0); /* Shrink *behind* processor */
+  }
+  100% {
+    /* Stay hidden and reset */
+    left: -50%; 
+    opacity: 0;
+  }
+}
+
+/* Animation for the OUTPUT image */
+@keyframes fadeInAndFlyOut {
+  0% {
+    opacity: 0;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+  }
+  /* Wait for inputs to finish (at 40%) */
+  40% {
+    opacity: 0;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.1); /* "Pop" out */
+  }
+  55% {
+     transform: translate(-50%, -50%) scale(1); /* Settle */
+  }
+  /* Hold in center for a bit */
+  70% {
+    opacity: 1;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  85% {
+    opacity: 1;
+    left: 150%; /* Fly off-screen right */
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  100% {
+    opacity: 0;
+    left: 150%;
+  }
+}
+
+/* Optional pulse for the processor */
+@keyframes processor-pulse {
+  0% { transform: translate(-50%, -50%) scale(1); }
+  50% { transform: translate(-50%, -50%) scale(1.05); }
+  100% { transform: translate(-50%, -50%) scale(1); }
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #f8f8f8;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  overflow: hidden;
+}
+.login-bg-video{
+  position: fixed;
+}
+.bulb{
+  position: absolute;
+  z-index: 10;
+  right: 15%;
+  bottom: 18%;
+  width: 200px;
+  animation: rot 2s linear infinite;
+}
+.landing-page {
+  text-align: center;
+  position: relative;
+  width: 100vw; /* Adjust as needed */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.top-bar {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding-top: 50px; /* Adjust distance from top */
+  z-index: 10;
+}
+
+.search-box {
+  background-color: transparent;
+  border: 2px solid white;
+  border-radius: 50px;
+  padding: 12px 25px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  font-size: 1.1em;
+  font-weight: 600;
+  color: #555;
+  white-space: nowrap;
+  transition: all 0.5s;
+}
+
+.search-box:hover{
+  background-color: rgb(90, 123, 169);
+  color: white;
+}
+
+.search-icon {
+  margin-right: 10px;
+  font-size: 1.2em;
+}
+
+.main-content {
+  padding-top: 150px; /* Adjust to move text down, considering top-bar */
+  position: relative;
+  z-index: 5;
+  
+}
+
+h1 {
+  font-size: 5.75em; /* Adjust as needed */
+  font-weight: 700;
+  color: #333;
+  line-height: 1.5;
+  letter-spacing: -0.05em;
+  margin: 0;
+  position: relative; /* Needed for absolute positioning of the logo */
+}
+
+.logo-placeholder {
+  display: inline-block;
+  width: 100px; /* Width of your logo */
+  height: 100px; /* Height of your logo */
+  background-color: #222; /* Placeholder background */
+  border-radius: 25px; /* Rounded corners for the placeholder */
+  position: absolute;
+  left: 50%; /* Center horizontally */
+  transform: translateX(-50%); /* Adjust to perfectly center */
+  top: 50%; /* Adjust vertically to align with 'design' word */
+  margin-top: -10px; /* Fine-tune vertical position */
+  z-index: 1; /* Ensure it's above the text if needed, but text is not overlapping */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* For the actual 'X' logo, you'd replace the background-color with an image or SVG */
+/* Example for an image: */
+/* .logo-placeholder {
+  background-image: url('./logo-x.svg');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+} */
+
+/* You'll need to create a logo like the 'X' in the image. */
+/* Here's a CSS-only approach for a simple 'X' if you don't have an SVG/image: */
+.logo-placeholder::before,
+.logo-placeholder::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 70%; /* Adjust size of the 'X' */
+  height: 10px; /* Thickness of the 'X' lines */
+  background-color: white;
+  border-radius: 5px;
+}
+
+.logo-placeholder::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.logo-placeholder::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 3em;
+  }
+  .search-box {
+    font-size: 0.9em;
+    padding: 10px 20px;
+  }
+  .logo-placeholder {
+    width: 70px;
+    height: 70px;
+    border-radius: 18px;
+  }
+  .logo-placeholder::before,
+  .logo-placeholder::after {
+    height: 7px;
+  }
+}
+
+@media (max-width: 480px) {
+  h1 {
+    font-size: 2em;
+  }
+  .search-box {
+    font-size: 0.8em;
+    padding: 8px 15px;
+  }
+  .logo-placeholder {
+    width: 50px;
+    height: 50px;
+    border-radius: 12px;
+  }
+  .logo-placeholder::before,
+  .logo-placeholder::after {
+    height: 5px;
+  }
+}
+
+@keyframes rot {
+  0%{
+  transform: rotate(0deg);
+  }
+  25%{
+  transform: rotate(-20deg);
+  }
+  75%{
+  transform: rotate(10deg);
+  }
+  100%{
+  transform: rotate(0deg);
+  }
+
+}

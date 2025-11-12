@@ -32,7 +32,7 @@ env/
 
 # --- React Frontend ---
 evo-frontend/node_modules/
-evo-frontend/build/
+
 evo-frontend/.env
 evo-frontend/.env.local
 evo-frontend/package-lock.json
