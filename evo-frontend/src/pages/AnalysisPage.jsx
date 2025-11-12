@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useAuth, API_BASE_URL } from '../context/AuthContext';
+// Import your new CSS file
+import './analyse.css'; 
+import bgVideo from "../assets/newvideo.mp4"
 
 // Analysis Page
 const AnalysisPage = () => {
@@ -63,94 +66,107 @@ const AnalysisPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-50 to-blue-100 py-12 px-4">
-      <div className="max-w-4xl mx-auto">
-        <h1 className="text-4xl font-bold text-indigo-900 mb-8 text-center">
+    <div className="analysis-page">
+       <video
+                          autoPlay
+                          loop
+                          muted
+                          className="login-bg-video" 
+                        >
+                          <source src={bgVideo} type="video/mp4" />
+                        </video>
+      <div className="analysis-page__container">
+        <h1 className="analysis-page__title">
           Analyze Your Data
         </h1>
 
-        <div className="bg-white rounded-lg shadow-xl p-8 mb-8">
-          <div className="space-y-6">
+        <div className="analysis-page__card">
+          <div className="analysis-page__form-group">
             <div>
-              <label className="block text-gray-700 font-semibold mb-3 text-lg">
-                1. Upload CSV File
+              <label className="analysis-page__label">
+                Upload CSV File
               </label>
-              <input
-                type="file"
-                accept=".csv"
-                onChange={handleFileChange}
-                className="w-full px-4 py-3 border-2 border-dashed border-gray-300 rounded-lg hover:border-indigo-500 transition cursor-pointer file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100"
-              />
-              {file && (
-                <p className="mt-2 text-sm text-gray-600">
-                  Selected: {file.name}
-                </p>
-              )}
+              <label className="analysis-page__file-input-wrapper">
+                <input
+                  type="file"
+                  accept=".csv"
+                  onChange={handleFileChange}
+                  className="analysis-page__file-input-native"
+                />
+                <span className="analysis-page__file-input-button">
+                  Choose file
+                </span>
+                <span className="analysis-page__file-input-label">
+                  {file ? file.name : 'No file chosen...'}
+                </span>
+              </label>
             </div>
 
             {columns.length > 0 && (
               <div>
-                <label className="block text-gray-700 font-semibold mb-3 text-lg">
-                  2. Select Output Column (Target Variable)
+                <label className="analysis-page__label">
+                   Select Output Column
                 </label>
-                <select
-                  value={outputColumn}
-                  onChange={(e) => setOutputColumn(e.target.value)}
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                >
-                  <option value="">-- Select a column --</option>
-                  {columns.map((col, idx) => (
-                    <option key={idx} value={col}>{col}</option>
-                  ))}
-                </select>
+                <div className="analysis-page__select-wrapper">
+                  <select
+                    value={outputColumn}
+                    onChange={(e) => setOutputColumn(e.target.value)}
+                    className="analysis-page__select"
+                  >
+                    <option value="">-- Select a column --</option>
+                    {columns.map((col, idx) => (
+                      <option key={idx} value={col}>{col}</option>
+                    ))}
+                  </select>
+                </div>
               </div>
             )}
 
             <button
               onClick={handleAnalyze}
               disabled={!file || !outputColumn || loading}
-              className="w-full bg-indigo-600 text-white py-4 rounded-lg text-lg font-semibold hover:bg-indigo-700 transition disabled:bg-gray-400"
+              className="analysis-page__button"
             >
-              {loading ? 'Analyzing... This may take a moment' : '3. Run Analysis'}
+              {loading ? 'Analyzing...' : 'Run Analysis'}
             </button>
           </div>
 
           {error && (
-            <div className="mt-6 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+            <div className="analysis-page__alert analysis-page__alert--error">
               {error}
             </div>
           )}
         </div>
 
         {result && (
-          <div className="bg-white rounded-lg shadow-xl p-8">
-            <h2 className="text-2xl font-bold text-indigo-900 mb-6">Analysis Results</h2>
+          <div className="analysis-page__card analysis-page__results">
+            <h2 className="analysis-page__results-title">Analysis Results</h2>
             
-            <div className="space-y-4">
+            <div className="analysis-page__results-group">
               <div>
-                <h3 className="text-lg font-semibold text-gray-700 mb-2">Discovered Formula:</h3>
-                <div className="bg-indigo-50 p-4 rounded-lg font-mono text-sm break-all">
+                <h3 className="analysis-page__results-subtitle">Discovered Formula:</h3>
+                <div className="analysis-page__results-formula">
                   {result.formula}
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-700 mb-2">Accuracy Score (R²):</h3>
-                  <div className="bg-green-50 p-4 rounded-lg text-2xl font-bold text-green-700">
+              <div className="analysis-page__results-grid">
+                <div className="analysis-page__metric-card">
+                  <h3 className="analysis-page__results-subtitle">Accuracy Score (R²)</h3>
+                  <div className="analysis-page__metric-value analysis-page__metric-value--accuracy">
                     {(result.accuracy_score * 100).toFixed(2)}%
                   </div>
                 </div>
 
-                <div>
-                  <h3 className="text-lg font-semibold text-gray-700 mb-2">Output Column:</h3>
-                  <div className="bg-blue-50 p-4 rounded-lg text-lg font-semibold text-blue-700">
+                <div className="analysis-page__metric-card">
+                  <h3 className="analysis-page__results-subtitle">Output Column</h3>
+                  <div className="analysis-page__metric-value analysis-page__metric-value--column">
                     {result.output_column}
                   </div>
                 </div>
               </div>
 
-              <div className="text-sm text-gray-500 mt-4">
+              <div className="analysis-page__results-timestamp">
                 Analysis completed at: {new Date(result.created_at).toLocaleString()}
               </div>
             </div>

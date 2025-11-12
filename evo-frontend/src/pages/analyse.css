@@ -1,0 +1,241 @@
+/* === Base Page Styling === */
+.analysis-page {
+  min-height: 100vh;
+  width: 100vw;
+  background: linear-gradient(to bottom right, #f8f9fa, #f3f4f6);
+  font-family: 'Inter', 'Poppins', sans-serif;
+  color: #1a1a1a; /* 10% soft black */
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 4rem 1.5rem;
+ 
+}
+.login-bg-video {
+position: fixed; 
+}
+/* === Container === */
+.analysis-page__container {
+  width: 100%;
+  max-width: 850px;
+  z-index: 100;
+  overflow: hidden;
+}
+
+/* === Title === */
+.analysis-page__title {
+  text-align: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #0f0f0f;
+  margin-bottom: 2.5rem;
+  letter-spacing: 0.4px;
+}
+
+/* === Card === */
+.analysis-page__card {
+  background-color: #ffffff;
+  border-radius: 1rem;
+  padding: 2rem 2.5rem;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.07);
+  transition: all 0.3s ease;
+  margin-bottom: 2rem;
+}
+
+.analysis-page__card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* === Label Text === */
+.analysis-page__label {
+  font-weight: 600;
+  color: #2b2b2b;
+  font-size: 1.1rem;
+  display: block;
+  margin-bottom: 0.8rem;
+}
+
+/* === File Input Wrapper === */
+.analysis-page__file-input-wrapper {
+  display: flex;
+  align-items: center;
+  border: 2px dashed #d1d5db;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  background-color: #fafafa;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.analysis-page__file-input-wrapper:hover {
+  border-color: #bcd0f2;
+  background-color: #f5f8ff;
+}
+
+/* Hide the default file input */
+.analysis-page__file-input-native {
+  display: none;
+}
+
+/* File input button (custom look) */
+.analysis-page__file-input-button {
+  background-color: #bcd8ff; /* pastel blue accent */
+  color: #0f0f0f;
+  padding: 0.6rem 1rem;
+  border-radius: 0.5rem;
+  font-weight: 500;
+  font-size: 0.95rem;
+  margin-right: 1rem;
+  transition: all 0.3s ease;
+}
+
+.analysis-page__file-input-button:hover {
+  background-color: #a8c8ff;
+}
+
+/* Selected file label */
+.analysis-page__file-input-label {
+  font-size: 0.9rem;
+  color: #444;
+  opacity: 0.8;
+}
+
+/* === Dropdown === */
+.analysis-page__select-wrapper {
+  position: relative;
+  margin-top: 0.5rem;
+}
+
+.analysis-page__select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 1.5px solid #d4d4d8;
+  border-radius: 0.75rem;
+  font-size: 1rem;
+  color: #1a1a1a;
+  background-color: #ffffff;
+  outline: none;
+  transition: all 0.3s ease;
+}
+
+.analysis-page__select:focus {
+  border-color: #bcd0f2;
+  box-shadow: 0 0 0 3px rgba(188, 208, 242, 0.3);
+}
+
+/* === Button === */
+.analysis-page__button {
+  width: 100%;
+  background-color: #bcd8ff; /* pastel blue accent */
+  color: #0f0f0f;
+  border: none;
+  border-radius: 0.75rem;
+  padding: 1rem 0;
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-top: 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.analysis-page__button:hover {
+  background-color: #a8c8ff;
+  transform: scale(1.02);
+}
+
+.analysis-page__button:disabled {
+  background-color: #d1d5db;
+  cursor: not-allowed;
+}
+
+/* === Alert (Error Message) === */
+.analysis-page__alert {
+  margin-top: 1.5rem;
+  padding: 1rem 1.25rem;
+  border-radius: 0.75rem;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.analysis-page__alert--error {
+  background-color: #fff1f1;
+  border: 1px solid #ffc7c7;
+  color: #b91c1c;
+}
+
+/* === Results Section === */
+.analysis-page__results-title {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #111;
+  margin-bottom: 1.5rem;
+}
+
+.analysis-page__results-subtitle {
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.analysis-page__results-formula {
+  background: #eef4ff;
+  border-radius: 0.75rem;
+  padding: 1rem;
+  font-family: monospace;
+  word-break: break-word;
+  font-size: 0.9rem;
+  color: #1a1a1a;
+}
+
+/* Results grid */
+.analysis-page__results-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+/* Metric cards */
+.analysis-page__metric-card {
+  background: #f9fafb;
+  border-radius: 0.75rem;
+  padding: 1.25rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.analysis-page__metric-value {
+  margin-top: 0.5rem;
+  border-radius: 0.75rem;
+  padding: 0.75rem;
+  text-align: center;
+  font-weight: 600;
+}
+
+.analysis-page__metric-value--accuracy {
+  background-color: #f2faf2;
+  color: #047857;
+  font-size: 1.3rem;
+}
+
+.analysis-page__metric-value--column {
+  background-color: #edf6ff;
+  color: #1d4ed8;
+  font-size: 1.1rem;
+}
+
+/* Timestamp */
+.analysis-page__results-timestamp {
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  color: #6b7280;
+  text-align: right;
+}
+
+/* === Smooth Fade Animation === */
+
+
+.analysis-page__card,
+.analysis-page__alert,
+.analysis-page__results {
+  animation: fadeIn 0.5s ease-in-out;
+}

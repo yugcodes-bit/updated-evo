@@ -99,7 +99,7 @@ const LandingPage = () => {
         onClick={() => navigate(token ? '/analyze' : '/login')}
         className="cta-button"
       >
-        {token ? 'Start Analyzing' : 'Try Evosolve'}
+        {token ? 'Start Analyzing' : 'Evo'}
       </button>
       
       {/* The features-grid has been removed as requested */}
