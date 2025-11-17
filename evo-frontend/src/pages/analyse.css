@@ -227,7 +227,7 @@ position: fixed;
 .analysis-page__results-timestamp {
   margin-top: 1.5rem;
   font-size: 0.9rem;
-  color: #6b7280;
+  color: #000000;
   text-align: right;
 }
 
@@ -238,4 +238,75 @@ position: fixed;
 .analysis-page__alert,
 .analysis-page__results {
   animation: fadeIn 0.5s ease-in-out;
+}
+
+/* CSV Preview Table */
+/* CSV Preview Table */
+.csv-preview {
+  margin-top: 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 1rem;
+  padding: 1rem;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 0 10px rgba(255,255,255,0.05);
+}
+
+.csv-preview__title {
+  font-size: 1.1rem;
+  margin-bottom: 0.8rem;
+  color: #141414;
+  font-weight: 500;
+}
+
+.csv-preview__table-wrapper {
+  overflow-x: auto;
+  max-height: 260px;
+}
+
+.csv-preview__table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  background: rgb(255, 255, 255);
+  border-radius: 8px;
+}
+
+/* Header row styling */
+.csv-preview__table th {
+  position: sticky;
+  top: 0;
+  background: rgba(30, 30, 30, 0.9); /* darker header */
+  color: #ffffff;
+  font-weight: 600;
+  border-bottom: 2px solid rgba(255,255,255,0.2);
+  padding: 0.7rem;
+  text-transform: capitalize;
+}
+
+/* Data cells */
+.csv-preview__table td {
+  border-bottom: 1px solid rgba(5, 5, 5, 0.1);
+  padding: 0.6rem;
+  color: #d6d6d6;
+}
+
+/* Alternate row shading */
+.csv-preview__table tr:nth-child(even) {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+/* Smooth scroll for long tables */
+.csv-preview__table-wrapper::-webkit-scrollbar {
+  height: 6px;
+}
+
+.csv-preview__table-wrapper::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.2);
+  border-radius: 10px;
+}
+
+/* Animated Analyze Button Text */
+.analysis-page__button:disabled {
+  opacity: 0.8;
+  cursor: not-allowed;
 }

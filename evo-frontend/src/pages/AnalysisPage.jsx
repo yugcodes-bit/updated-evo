@@ -1,11 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth, API_BASE_URL } from '../context/AuthContext';
-// Import your new CSS file
-import './analyse.css'; 
-import bgVideo from "../assets/newvideo.mp4"
+import './analyse.css';
+import bgVideo from "../assets/newvideo.mp4";
 
-// Analysis Page
 const AnalysisPage = () => {
   const [file, setFile] = useState(null);
   const [columns, setColumns] = useState([]);
@@ -13,7 +11,23 @@ const AnalysisPage = () => {
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [previewData, setPreviewData] = useState([]);
+  const [loadingText, setLoadingText] = useState('Analyzing...');
   const { token } = useAuth();
+
+  const phrases = ['Analyzing...', 'Processing Data...', 'Finding Patterns...', 'Building Formula...', 'Almost Done...'];
+
+  // Cycle loading text every 1.5 seconds
+  useEffect(() => {
+    if (loading) {
+      let i = 0;
+      const interval = setInterval(() => {
+        setLoadingText(phrases[i % phrases.length]);
+        i++;
+      }, 1500);
+      return () => clearInterval(interval);
+    }
+  }, [loading]);
 
   const handleFileChange = async (e) => {
     const selectedFile = e.target.files[0];
@@ -22,13 +36,14 @@ const AnalysisPage = () => {
       setResult(null);
       setError('');
 
-      // Read CSV to extract columns
       const reader = new FileReader();
       reader.onload = (event) => {
         const text = event.target.result;
-        const firstLine = text.split('\n')[0];
-        const cols = firstLine.split(',').map(col => col.trim().replace(/"/g, '')); // Clean column names
-        setColumns(cols);
+        const rows = text.split('\n').map(r => r.split(',').map(x => x.trim().replace(/"/g, '')));
+        const firstLine = rows[0];
+        const sampleRows = rows.slice(1, 6); // first 5 data rows
+        setColumns(firstLine);
+        setPreviewData(sampleRows);
         setOutputColumn('');
       };
       reader.readAsText(selectedFile);
@@ -67,25 +82,17 @@ const AnalysisPage = () => {
 
   return (
     <div className="analysis-page">
-       <video
-                          autoPlay
-                          loop
-                          muted
-                          className="login-bg-video" 
-                        >
-                          <source src={bgVideo} type="video/mp4" />
-                        </video>
+      <video autoPlay loop muted className="login-bg-video">
+        <source src={bgVideo} type="video/mp4" />
+      </video>
+
       <div className="analysis-page__container">
-        <h1 className="analysis-page__title">
-          Analyze Your Data
-        </h1>
+        <h1 className="analysis-page__title">Analyze Your Data</h1>
 
         <div className="analysis-page__card">
           <div className="analysis-page__form-group">
             <div>
-              <label className="analysis-page__label">
-                Upload CSV File
-              </label>
+              <label className="analysis-page__label">Upload CSV File</label>
               <label className="analysis-page__file-input-wrapper">
                 <input
                   type="file"
@@ -93,9 +100,7 @@ const AnalysisPage = () => {
                   onChange={handleFileChange}
                   className="analysis-page__file-input-native"
                 />
-                <span className="analysis-page__file-input-button">
-                  Choose file
-                </span>
+                <span className="analysis-page__file-input-button">Choose file</span>
                 <span className="analysis-page__file-input-label">
                   {file ? file.name : 'No file chosen...'}
                 </span>
@@ -103,23 +108,44 @@ const AnalysisPage = () => {
             </div>
 
             {columns.length > 0 && (
-              <div>
-                <label className="analysis-page__label">
-                   Select Output Column
-                </label>
-                <div className="analysis-page__select-wrapper">
-                  <select
-                    value={outputColumn}
-                    onChange={(e) => setOutputColumn(e.target.value)}
-                    className="analysis-page__select"
-                  >
-                    <option value="">-- Select a column --</option>
-                    {columns.map((col, idx) => (
-                      <option key={idx} value={col}>{col}</option>
-                    ))}
-                  </select>
+              <>
+                <div>
+                  <label className="analysis-page__label">Select Output Column</label>
+                  <div className="analysis-page__select-wrapper">
+                    <select
+                      value={outputColumn}
+                      onChange={(e) => setOutputColumn(e.target.value)}
+                      className="analysis-page__select"
+                    >
+                      <option value="">-- Select a column --</option>
+                      {columns.map((col, idx) => (
+                        <option key={idx} value={col}>{col}</option>
+                      ))}
+                    </select>
+                  </div>
                 </div>
-              </div>
+
+                {/* CSV Preview */}
+                <div className="csv-preview">
+                  <h3 className="csv-preview__title">Data Preview (first 5 rows)</h3>
+                  <div className="csv-preview__table-wrapper">
+                    <table className="csv-preview__table">
+                      <thead>
+                        <tr>
+                          {columns.map((col, i) => <th key={i}>{col}</th>)}
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {previewData.map((row, i) => (
+                          <tr key={i}>
+                            {row.map((cell, j) => <td key={j}>{cell}</td>)}
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </>
             )}
 
             <button
@@ -127,7 +153,7 @@ const AnalysisPage = () => {
               disabled={!file || !outputColumn || loading}
               className="analysis-page__button"
             >
-              {loading ? 'Analyzing...' : 'Run Analysis'}
+              {loading ? loadingText : 'Run Analysis'}
             </button>
           </div>
 
@@ -141,13 +167,11 @@ const AnalysisPage = () => {
         {result && (
           <div className="analysis-page__card analysis-page__results">
             <h2 className="analysis-page__results-title">Analysis Results</h2>
-            
+
             <div className="analysis-page__results-group">
               <div>
                 <h3 className="analysis-page__results-subtitle">Discovered Formula:</h3>
-                <div className="analysis-page__results-formula">
-                  {result.formula}
-                </div>
+                <div className="analysis-page__results-formula">{result.formula}</div>
               </div>
 
               <div className="analysis-page__results-grid">
