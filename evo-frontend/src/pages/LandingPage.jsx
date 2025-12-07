@@ -9,6 +9,7 @@ import bulb from '../assets/bulb.png'
 import images from '../assets/imputoutput.png'
 import ans from '../assets/ans.png'
 
+
 const Landing = () => {
   return (
     <div className="landing-page">

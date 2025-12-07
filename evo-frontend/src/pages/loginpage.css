@@ -1,11 +1,11 @@
 /* src/pages/LoginPage.css */
 .imagedna{
   z-index: 10;
-  rotate: 60deg;
-  scale: 3.5;
   position: absolute;
-  left: 15vw;
-  top: 25vh;
+  width: 50vw;
+  left: 0vw;
+  opacity: 0.3;
+  top: 0vh;
 }
 /* Define the overall page container */
 .login-page {
@@ -56,7 +56,7 @@
   box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
   
   padding: 3.5rem;
-  margin-right: 320px;
+  margin-right: 220px;
   margin-top: 0px;
   max-width: 320px;
   width: 100%;

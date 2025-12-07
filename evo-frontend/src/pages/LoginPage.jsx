@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useAuth, API_BASE_URL } from '../context/AuthContext';
 import './loginpage.css'; 
 import bgVideo from "../assets/newvideo.mp4"
-import dna from "../assets/imagedna.png"
+import dna from "../assets/vecbg.jpg"
 
 
 // Login/Register Page
