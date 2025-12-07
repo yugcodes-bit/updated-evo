@@ -1,0 +1,1 @@
+$$\text{displacement} = \text{amplitude} \times e^{-0.5 \times \text{time}} \times \cos(2 \times \text{time})$$
