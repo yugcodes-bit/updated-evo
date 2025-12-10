@@ -1,5 +1,5 @@
-flask~=2.3.0
-gplearn~=0.4.2
-numpy~=1.25.0
-pandas~=2.1.0
-scikit-learn~=1.3.0
+flask
+gplearn
+numpy>=1.26.0
+pandas>=2.1.0
+scikit-learn==1.5.2
